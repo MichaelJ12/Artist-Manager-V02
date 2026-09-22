@@ -1,5 +1,16 @@
 <script setup>
 import ArtworkCard from '@/components/ArtworkCard.vue';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+
+onMounted(async () => {
+  try {
+    const response = await axios.get('/api/artworks')
+
+  } catch (err) {
+    
+  }
+})
 </script>
 
 <template>
