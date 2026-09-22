@@ -3,3 +3,26 @@
 ################################################################################
 
 /.vs
+/backend/.vs/ArtistManager.slnx
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build output
+bin/
+obj/
+
+# NuGet
+packages/
+
+# Logs
+*.log
+
+# User-specific files
+*.user
+*.rsuser
+
+# Environment / secrets
+appsettings.Local.json
+.env
