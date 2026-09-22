@@ -1,22 +1,24 @@
 <script setup>
-import { defineProps } from 'vue';
+import { RouterLink } from 'vue-router';
 
 defineProps({
-  limit: Number,
+  id: Number,
   title: String,
-  imgUrl: URL,
-  alt: String
+  imgUrl: String,
 })
+
+
 
 </script>
 
 <template>
-      <div class="bg-white rounded-lg shadow overflow-hidden">
-          <img :src="imgUrl" alt="{{ alt }}" class="w-full h-48 object-cover" >
+      <RouterLink :to="`/artworks/${id}`"
+        class="block bg-white rounded-lg shadow overflow-hidden cursor-pointer transition-transform hover:scale-105 hover:shadow-lg ">
+          <img :src="imgUrl" :alt="title" class="w-full h-48 object-cover" >
           <div class="py-4 ml-3">
-              <h3 class=" font-bold text-lg" >
+              <p class=" font-bold text-lg" >
                   {{ title }}
-              </h3>
+              </p>
           </div>
-      </div>
+      </RouterLink>
 </template>

@@ -19,5 +19,15 @@ namespace ArtistManager.Controllers {
             var artworks = await _context.Artworks.ToListAsync();
             return Ok(artworks);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> getById(int id) {
+            var artwork = await _context.Artworks.FindAsync(id);
+
+            if (artwork == null) return NotFound();
+
+            return Ok(artwork);
+
+        }
     }
 }

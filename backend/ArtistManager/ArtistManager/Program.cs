@@ -5,6 +5,13 @@ using Scalar.AspNetCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddCors(options => {
+    options.AddPolicy("VueFrontend", policy => {
+        policy.WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -20,7 +27,11 @@ if (app.Environment.IsDevelopment()) {
     app.MapScalarApiReference();
 }
 
+
 app.UseHttpsRedirection();
+
+app.UseCors("VueFrontend");
+
 
 app.UseAuthorization();
 

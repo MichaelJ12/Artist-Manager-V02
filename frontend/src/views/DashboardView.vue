@@ -1,5 +1,17 @@
 <script setup>
 import ArtworkCard from '@/components/ArtworkCard.vue';
+import { onMounted  } from 'vue';
+import { useArtworkStore } from '@/stores/artworkStore';
+
+const limit = 4
+
+const artworkStore = useArtworkStore()
+
+onMounted(() => {
+  if (artworkStore.artworks.length === 0) {
+    artworkStore.fetchArtworks()
+  }
+})
 </script>
 
 <template>
@@ -11,11 +23,15 @@ import ArtworkCard from '@/components/ArtworkCard.vue';
 
       <h1 class="mb-6 text-2xl font-bold tracking-tight text-slate-900">Artworks</h1>
 
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <ArtworkCard title="Cyber Ninja" img-url="/Cyber-ninja-sketches-V15-22.png"/>
-        <ArtworkCard title="Encounter" img-url="public\Encounter-V04-6.png"/>
-        <ArtworkCard title="Zheng's Shop" img-url="public\Illustration5-VFinale.jpg"/>
-        <ArtworkCard title="Journey" img-url="public\Illustration6-V06-11.png"/>
+      <div  class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <ArtworkCard
+         v-for="artwork in artworkStore.artworks.slice(0, limit || artworkStore.artworks.length)"
+         :key="artwork.id"
+         :id="artwork.id"
+         :title="artwork.title"
+         :imgUrl="artwork.imageUrl"
+         :limit="3"
+        />
       </div>
     </section>
 
@@ -24,10 +40,7 @@ import ArtworkCard from '@/components/ArtworkCard.vue';
       <h1 class="mb-6 text-2xl font-bold tracking-tight text-slate-900">Posts</h1>
 
       <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <ArtworkCard />
-        <ArtworkCard />
-        <ArtworkCard />
-        <ArtworkCard />
+
       </div>
     </section>
   </main>
