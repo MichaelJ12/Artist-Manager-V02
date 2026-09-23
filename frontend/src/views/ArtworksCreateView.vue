@@ -1,5 +1,6 @@
 <script setup>
 import {  ref } from 'vue';
+import { toast } from 'vue3-toastify'
 import api from '@/services/api';
 import ActionButton from '@/components/ActionButton.vue';
 import { useNavigation } from '@/composables/useNavigation';
@@ -9,13 +10,9 @@ const { goBackOrTo, router } = useNavigation()
 const title =  ref('')
 const image = ref(null)
 
-
-
 function handleFileChange(e) {
   image.value = e.target.files[0]
 }
-
-
 
 async function createArtwork() {
   const formData = new FormData()
@@ -28,9 +25,13 @@ async function createArtwork() {
       headers: { 'Content-Type' : 'multipart/form-data' }
     })
 
-    router.push({ name : 'artworks' })
+    router.push({
+      name: 'artworks',
+      query: { toast: 'created' },
+    })
 
   } catch (error) {
+    toast.error('Failed to create artwork')
     console.error('something when wrong', error);
   }
 }

@@ -1,10 +1,12 @@
 <script setup>
 import { ref , onMounted, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useArtworkStore } from '@/stores/artworkStore';
 import api from '@/services/api';
 import ActionButton from '@/components/ActionButton.vue'
 import { useNavigation } from '@/composables/useNavigation';
+import { toast } from 'vue3-toastify'
+import router from '@/router';
 
 const { goBackOrTo } = useNavigation()
 const route = useRoute()
@@ -39,8 +41,12 @@ async function UpdateArtwork() {
       userId: 1,
     })
 
-    goBackOrTo('artworks')
+    router.push({
+      name: 'artworks',
+      query: { toast: 'updated' },
+    })
   } catch (error) {
+    toast.error('Failed to update artwork')
     console.error('something went wrong', error)
   }
 }

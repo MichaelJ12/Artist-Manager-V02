@@ -2,11 +2,14 @@
 import ArtworkCard from '@/components/ArtworkCard.vue';
 import { ref, onMounted, computed, watch  } from 'vue';
 import { useArtworkStore } from '@/stores/artworkStore';
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRoute, useRouter } from 'vue-router';
 import { Search } from 'lucide-vue-next'
+import { toast } from 'vue3-toastify'
 
 defineProps({ limit: Number })
 
+const route = useRoute()
+const router = useRouter()
 const search = ref('')
 const artworkStore = useArtworkStore()
 const result = ref(false)
@@ -25,6 +28,25 @@ const filteredArtworks = computed(() => {
 watch(filteredArtworks, (filteredSearch) => {
   result.value = filteredSearch.length === 0
 })
+
+watch(
+  () => route.query.toast,
+  (toastType) => {
+    if (toastType === 'created') {
+      toast.success('Artwork created successfully')
+    }
+
+    if (toastType === 'updated') {
+      toast.success('Artwork updated successfully')
+    }
+
+    if (toastType) {
+      router.replace({ name: 'artworks', query: {} })
+    }
+  },
+  { immediate: true }
+)
+
 onMounted(() => {
   artworkStore.fetchArtworks()
 })
