@@ -60,7 +60,7 @@ onMounted(() => {
         <p class="mt-2 pl-2">{{ artworkStore.artworks.length }} Artworks</p>
       </div>
       <div v-if="result" class="flex justify-center pt-20">
-        <p>
+        <p class="text-center">
           <Search class="h-24 w-24" />
           No results
         </p>

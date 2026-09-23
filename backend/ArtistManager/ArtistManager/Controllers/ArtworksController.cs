@@ -17,7 +17,7 @@ namespace ArtistManager.Controllers {
 
         [HttpGet]
         public async Task<IActionResult> GetAll() {
-            var artworks = await _context.Artworks.ToListAsync();
+            var artworks = await _context.Artworks.OrderByDescending(a => a.CreatedAt).ToListAsync();
             return Ok(artworks);
         }
 
@@ -47,7 +47,9 @@ namespace ArtistManager.Controllers {
             var artwork = new Artwork {
                 Title = title,
                 ImageUrl = $"/images/{fileName}",
-                UserId = userId
+                UserId = userId,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
             };
 
             _context.Artworks.Add(artwork);
@@ -64,7 +66,7 @@ namespace ArtistManager.Controllers {
 
             artwork.Title = updatedArtwork.Title;
             artwork.ImageUrl = updatedArtwork.ImageUrl;
-
+            artwork.UpdatedAt = DateTime.UtcNow;
             await _context.SaveChangesAsync();
 
             return NoContent();
