@@ -32,6 +32,7 @@ app.UseHttpsRedirection();
 
 app.UseCors("VueFrontend");
 
+app.UseStaticFiles();
 
 app.UseAuthorization();
 

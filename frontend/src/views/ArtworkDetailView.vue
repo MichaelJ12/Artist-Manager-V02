@@ -1,10 +1,12 @@
 <script setup>
 import { ref , onMounted } from 'vue'
 import { useRoute } from 'vue-router';
+import { useArtworkStore } from '@/stores/artworkStore';
 import api from '@/services/api';
 
 const route = useRoute()
 const artwork = ref(null)
+const artworkStore = useArtworkStore()
 
 onMounted(async () => {
   try {
@@ -22,7 +24,7 @@ onMounted(async () => {
   <main class="grid flex-1 bg-slate-100 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,24rem)] lg:gap-10 lg:px-8 lg:py-10">
     <div v-if="artwork" class="flex items-center justify-center  rounded-lg bg-white">
       <img
-        :src="artwork.imageUrl"
+        :src="artworkStore.resolveImageUrl(artwork.imageUrl)"
         :alt="artwork.title"
         class="max-h-[calc(100vh-10rem)] w-full object-contain"
       />

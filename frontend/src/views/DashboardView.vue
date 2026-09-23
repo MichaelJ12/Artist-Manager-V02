@@ -24,6 +24,7 @@ onMounted(() => {
       <h1 class="mb-6 text-2xl font-bold tracking-tight text-slate-900">Artworks</h1>
 
       <div  class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <!-- add created_at to artwork model -->
         <ArtworkCard
          v-for="artwork in artworkStore.artworks.slice(0, limit || artworkStore.artworks.length)"
          :key="artwork.id"

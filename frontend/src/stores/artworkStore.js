@@ -7,6 +7,12 @@ export const useArtworkStore = defineStore('artworks', () => {
   const loading = ref(false)
   const error = ref(null)
 
+  const apiBaseUrl = 'https://localhost:7221'
+
+  function resolveImageUrl(url) {
+    return url.startsWith('https') ? url : apiBaseUrl + url
+  }
+
   async function fetchArtworks() {
     loading.value = true
     error.value = null
@@ -21,5 +27,5 @@ export const useArtworkStore = defineStore('artworks', () => {
     }
   }
 
-  return { artworks, loading, error, fetchArtworks }
+  return { artworks, loading, error, fetchArtworks, resolveImageUrl }
 })

@@ -1,4 +1,5 @@
 ﻿using ArtistManager.Data;
+using ArtistManager.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,13 +22,38 @@ namespace ArtistManager.Controllers {
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> getById(int id) {
+        public async Task<IActionResult> GetById(int id) {
             var artwork = await _context.Artworks.FindAsync(id);
 
             if (artwork == null) return NotFound();
 
             return Ok(artwork);
 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromForm] string title, IFormFile image, [FromForm] int userId) {
+            if (image == null || image.Length == 0) return BadRequest("Image is required.");
+
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(image.FileName)}";
+            var filePath = Path.Combine("wwwroot/images", fileName);
+
+            Directory.CreateDirectory("wwwroot/images"); 
+
+            using (var stream = new FileStream(filePath, FileMode.Create)) {
+                await image.CopyToAsync(stream);
+            }
+            
+            var artwork = new Artwork {
+                Title = title,
+                ImageUrl = $"/images/{fileName}",
+                UserId = userId
+            };
+
+            _context.Artworks.Add(artwork);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetById), new { id = artwork.Id }, artwork);
         }
     }
 }
