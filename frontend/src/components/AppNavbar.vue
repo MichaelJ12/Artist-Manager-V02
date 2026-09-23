@@ -27,7 +27,7 @@ const isMenuOpen = ref(false)
 			<div
 				id="main-navigation"
 				:class="isMenuOpen ? 'block' : 'hidden'"
-				class="absolute left-0 right-0 top-[73px] z-10 border-b border-slate-200 bg-white px-4 py-4 shadow-sm sm:static sm:block sm:border-0 sm:p-0 sm:shadow-none"
+				class="absolute left-0 right-0 top-18.25 z-10 border-b border-slate-200 bg-white px-4 py-4 shadow-sm sm:static sm:block sm:border-0 sm:p-0 sm:shadow-none"
 			>
 				<div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-6">
 					<RouterLink

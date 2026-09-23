@@ -55,5 +55,19 @@ namespace ArtistManager.Controllers {
 
             return CreatedAtAction(nameof(GetById), new { id = artwork.Id }, artwork);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, Artwork updatedArtwork) {
+            var artwork = await _context.Artworks.FindAsync(id);
+
+            if (artwork == null) return NotFound();
+
+            artwork.Title = updatedArtwork.Title;
+            artwork.ImageUrl = updatedArtwork.ImageUrl;
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }

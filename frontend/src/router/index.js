@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '@/views/LoginView.vue'
 import DashboardView from '@/views/DashboardView.vue'
 import ArtworksView from '@/views/ArtworksView.vue'
-import ArtworkDetailView from '@/views/ArtworkDetailView.vue'
+import ArtworkEditView from '@/views/ArtworkEditView.vue'
 import ArtworksCreateView from '@/views/ArtworksCreateView.vue'
 
 const router = createRouter({
@@ -25,8 +25,8 @@ const router = createRouter({
     },
     {
       path: '/artworks/:id',
-      name: 'artworks-details',
-      component: ArtworkDetailView,
+      name: 'artworks-edit',
+      component: ArtworkEditView,
     },
     {
       path: '/artworks/create',
