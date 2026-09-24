@@ -16,8 +16,9 @@ export const useArtworkStore = defineStore('artworks', () => {
   async function fetchArtworks() {
     loading.value = true
     error.value = null
+
     try {
-      const response = await api.get('/artworks')
+      const response = await api.get(`/artworks`)
       artworks.value = response.data
     } catch (err) {
       error.value = err

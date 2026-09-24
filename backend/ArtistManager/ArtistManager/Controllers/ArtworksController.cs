@@ -17,7 +17,7 @@ namespace ArtistManager.Controllers {
 
         [HttpGet]
         public async Task<IActionResult> GetAll() {
-            var artworks = await _context.Artworks.OrderByDescending(a => a.CreatedAt).ToListAsync();
+            var artworks = await _context.Artworks.OrderByDescending(a => a.CreatedAt).OrderByDescending(a => a.UpdatedAt).ToListAsync();
             return Ok(artworks);
         }
 

@@ -48,16 +48,16 @@ async function createArtwork() {
                     <p class="mt-2 text-slate-600">Add a new piece to your gallery.</p>
                 </div>
                 <!-- TODO: show image that is selected. -->
-                <form @submit.prevent="createArtwork" enctype="multipart/form-data" class="space-y-6">
+                <form enctype="multipart/form-data" class="space-y-6" @submit.prevent="createArtwork">
                     <div>
                         <label for="title" class="mb-2 block text-sm font-bold text-slate-700">Title</label>
-                        <input id="title" type="text" name="title" v-model="title" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
+                        <input id="title" v-model="title" type="text" name="title" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
                         >
                     </div>
 
                     <div>
                         <label for="image" class="mb-2 block text-sm font-bold text-slate-700">Image</label>
-                        <input id="image" type="file" name="image" accept="image/*" @change="handleFileChange"  class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 file:mr-4 file:rounded-md file:border-0 file:bg-blue-50 file:px-3 file:py-2 file:font-medium file:text-blue-700 hover:file:bg-blue-100"
+                        <input id="image" type="file" name="image" accept="image/*" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 file:mr-4 file:rounded-md file:border-0 file:bg-blue-50 file:px-3 file:py-2 file:font-medium file:text-blue-700 hover:file:bg-blue-100"  @change="handleFileChange"
                         >
                     </div>
                     <div class="flex justify-between">

@@ -75,10 +75,11 @@ onMounted(async () => {
 
     <aside v-if="artwork" class="flex items-start  ">
       <div class="w-full  p-6  tracking-tight text-slate-900 bg-white  lg:rounded-lg ">
-        <form @submit.prevent="UpdateArtwork" enctype="multipart/form-data" class="space-y-6">
+        <form enctype="multipart/form-data" class="space-y-6" @submit.prevent="UpdateArtwork">
 
                 <label for="title" class="mb-6 block text-center text-2xl font-bold text-slate-700">Title</label>
-                <input id="title" type="text" name="title" v-model="artwork.title"
+                <input
+id="title" v-model="artwork.title" type="text" name="title"
                  class=" w-full rounded-lg border border-slate-300 bg-white mb-6 px-3 py-2 text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
                 >
                 <p v-if="errorMsg" class="text-red-500">

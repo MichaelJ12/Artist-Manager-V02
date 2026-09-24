@@ -6,8 +6,6 @@ import { RouterLink, useRoute, useRouter } from 'vue-router';
 import { Search } from 'lucide-vue-next'
 import { toast } from 'vue3-toastify'
 
-defineProps({ limit: Number })
-
 const route = useRoute()
 const router = useRouter()
 const search = ref('')
@@ -90,10 +88,10 @@ onMounted(() => {
       <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         <ArtworkCard
          v-for="artwork in filteredArtworks"
-         :key="artwork.id"
          :id="artwork.id"
+         :key="artwork.id"
          :title="artwork.title"
-         :imgUrl="artwork.imageUrl"
+         :img-url="artwork.imageUrl"
         />
       </div>
     </section>

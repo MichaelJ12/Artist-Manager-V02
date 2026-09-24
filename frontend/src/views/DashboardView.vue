@@ -26,11 +26,10 @@ onMounted(() => {
       <div  class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         <ArtworkCard
          v-for="artwork in artworkStore.artworks.slice(0, limit || artworkStore.artworks.length)"
-         :key="artwork.id"
          :id="artwork.id"
+         :key="artwork.id"
          :title="artwork.title"
-         :imgUrl="artwork.imageUrl"
-         :limit="3"
+         :img-url="artwork.imageUrl"
         />
       </div>
     </section>
