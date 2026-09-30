@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace ArtistManager.Models {
     public class Artwork {
@@ -15,6 +16,7 @@ namespace ArtistManager.Models {
         [Required]
         public int UserId { get; set; }
 
+        [JsonIgnore]
         public User User { get; set; } = null!;
 
         public DateTime CreatedAt { get; set; }

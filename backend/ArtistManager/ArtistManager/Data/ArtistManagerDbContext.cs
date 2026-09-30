@@ -26,7 +26,7 @@ namespace ArtistManager.Data
 
             // Seed user data
             modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, Username = "artist", Email = "artist@example.com", PasswordHash = "hashedpassword123", Role = "Artist" }
+                new User { Id = 1, Username = "artist", Email = "artist@example.com", PasswordHash = "password", Role = "Artist" }
             );
 
             var baseDate = new DateTime(2024, 1, 15, 10, 30, 0, DateTimeKind.Utc);

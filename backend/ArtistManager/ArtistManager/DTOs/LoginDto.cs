@@ -1,12 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using ArtistManager.Models;
 
 namespace ArtistManager.DTOs {
-    public class RegisterDto {
-
-        [Required]
-        [StringLength(100, MinimumLength = 2)]
-        public required string Username { get; set; }
+    public class LoginDto {
 
         [Required]
         [EmailAddress]
@@ -16,6 +11,5 @@ namespace ArtistManager.DTOs {
         [Required]
         [MinLength(8)]
         public required string Password { get; set; }
-
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ArtistManager.Data;
 using ArtistManager.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ namespace ArtistManager.Controllers {
             _context = context;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll() {
             var artworks = await _context.Artworks.OrderByDescending(a => a.CreatedAt).OrderByDescending(a => a.UpdatedAt).ToListAsync();
