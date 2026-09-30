@@ -8,7 +8,7 @@ namespace ArtistManager.Controllers {
     [Route("api/[controller]")]
     [ApiController]
     public class ArtworksController : ControllerBase {
-
+        // use repositories
         private readonly ArtistManagerDbContext _context;
 
         public ArtworksController(ArtistManagerDbContext context) {
@@ -33,6 +33,7 @@ namespace ArtistManager.Controllers {
 
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] string title, IFormFile image, [FromForm] int userId) {
+            // refactor this into service
             if (image == null || image.Length == 0) return BadRequest("Image is required.");
 
             var fileName = $"{Guid.NewGuid()}{Path.GetExtension(image.FileName)}";

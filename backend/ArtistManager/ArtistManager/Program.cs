@@ -1,6 +1,10 @@
 using ArtistManager.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using ArtistManager.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +18,23 @@ builder.Services.AddCors(options => {
 });
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
+builder.Services.AddSingleton<JwtService>();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(jwtOptions => {
+        jwtOptions.TokenValidationParameters = new TokenValidationParameters {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidAudience = builder.Configuration.GetSection("Jwt:Audience").Get<string>(),
+            ValidIssuer = builder.Configuration.GetSection("Jwt:Issuer").Get<string>(),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+                builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("Jwt:Key is missing")))
+        };
+    });
+
+builder.Services.AddAuthorization();
 builder.Services.AddOpenApi();
 builder.Services.AddDbContext<ArtistManagerDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -34,6 +54,7 @@ app.UseCors("VueFrontend");
 
 app.UseStaticFiles();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
