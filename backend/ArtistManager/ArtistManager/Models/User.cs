@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace ArtistManager.Models {
     public class User {
@@ -18,5 +19,8 @@ namespace ArtistManager.Models {
         public required string Role { get; set; }
 
         public ICollection<Artwork>? Artworks { get; set; }
+
+        [JsonIgnore]
+        public ICollection<RefreshToken> RefreshTokens { get; set; }
     }
 }

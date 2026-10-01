@@ -17,7 +17,7 @@ namespace ArtistManager.Models {
         public int UserId { get; set; }
 
         [JsonIgnore]
-        public User User { get; set; } = null!;
+        public User? User { get; set; }
 
         public DateTime CreatedAt { get; set; }
 

@@ -19,22 +19,26 @@ builder.Services.AddCors(options => {
 
 builder.Services.AddControllers();
 
-builder.Services.AddSingleton<JwtService>();
+builder.Services.AddScoped<JwtService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(jwtOptions => {
+        jwtOptions.MapInboundClaims = false;
+
         jwtOptions.TokenValidationParameters = new TokenValidationParameters {
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidAudience = builder.Configuration.GetSection("Jwt:Audience").Get<string>(),
-            ValidIssuer = builder.Configuration.GetSection("Jwt:Issuer").Get<string>(),
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("Jwt:Key is missing")))
+                builder.Configuration["Jwt:Key"]!)),
+            ClockSkew = TimeSpan.Zero
         };
     });
 
 builder.Services.AddAuthorization();
+
 builder.Services.AddOpenApi();
 builder.Services.AddDbContext<ArtistManagerDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

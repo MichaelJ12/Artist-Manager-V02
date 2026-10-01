@@ -8,24 +8,17 @@ using Microsoft.EntityFrameworkCore;
 namespace ArtistManager.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class ArtworksController : ControllerBase {
-        // use repositories
-        private readonly ArtistManagerDbContext _context;
-
-        public ArtworksController(ArtistManagerDbContext context) {
-            _context = context;
-        }
-
+    public class ArtworksController(ArtistManagerDbContext context) : ControllerBase {
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll() {
-            var artworks = await _context.Artworks.OrderByDescending(a => a.CreatedAt).OrderByDescending(a => a.UpdatedAt).ToListAsync();
+            var artworks = await context.Artworks.OrderByDescending(a => a.CreatedAt).ThenByDescending(a => a.UpdatedAt).ToListAsync();
             return Ok(artworks);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id) {
-            var artwork = await _context.Artworks.FindAsync(id);
+            var artwork = await context.Artworks.FindAsync(id);
 
             if (artwork == null) return NotFound();
 
@@ -55,22 +48,22 @@ namespace ArtistManager.Controllers {
                 UpdatedAt = DateTime.UtcNow
             };
 
-            _context.Artworks.Add(artwork);
-            await _context.SaveChangesAsync();
+            context.Artworks.Add(artwork);
+            await context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetById), new { id = artwork.Id }, artwork);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, Artwork updatedArtwork) {
-            var artwork = await _context.Artworks.FindAsync(id);
+            var artwork = await context.Artworks.FindAsync(id);
 
             if (artwork == null) return NotFound();
 
             artwork.Title = updatedArtwork.Title;
             artwork.ImageUrl = updatedArtwork.ImageUrl;
             artwork.UpdatedAt = DateTime.UtcNow;
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
             return NoContent();
         }

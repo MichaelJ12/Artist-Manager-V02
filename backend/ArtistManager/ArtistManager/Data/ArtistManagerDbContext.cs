@@ -3,12 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ArtistManager.Data
 {
-    public class ArtistManagerDbContext : DbContext
+    public class ArtistManagerDbContext(DbContextOptions<ArtistManagerDbContext> options) : DbContext(options)
     {
-        public ArtistManagerDbContext(DbContextOptions<ArtistManagerDbContext> options) : base(options) { }
-
         public DbSet<Artwork> Artworks { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.Entity<User>()
@@ -24,9 +23,18 @@ namespace ArtistManager.Data
                 .WithOne(u => u.User)
                 .HasForeignKey(a => a.UserId);
 
+            modelBuilder.Entity<RefreshToken>()
+                .HasIndex(r => r.TokenHash)
+                .IsUnique();
+
+            modelBuilder.Entity<RefreshToken>()
+                .HasOne(r => r.User)
+                .WithMany(r => r.RefreshTokens)
+                .HasForeignKey(r => r.UserId);
+
             // Seed user data
             modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, Username = "artist", Email = "artist@example.com", PasswordHash = "password", Role = "Artist" }
+                new User { Id = 1, Username = "artist", Email = "artist@example.com", PasswordHash = "$2a$12$QDzDQ1xAv.VtoDAMOwh03etdw84vhg2hySEntdPRlPGyv0m1l.SpG", Role = "Admin" }
             );
 
             var baseDate = new DateTime(2024, 1, 15, 10, 30, 0, DateTimeKind.Utc);

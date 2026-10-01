@@ -4,6 +4,7 @@ using ArtistManager.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArtistManager.Migrations
 {
     [DbContext(typeof(ArtistManagerDbContext))]
-    partial class ArtistManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20261001181000_ChnagedIsRevokedToBool")]
+    partial class ChnagedIsRevokedToBool
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,17 +133,12 @@ namespace ArtistManager.Migrations
 
                     b.Property<string>("TokenHash")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TokenHash")
-                        .IsUnique();
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("RefreshTokens");
                 });
@@ -186,7 +184,7 @@ namespace ArtistManager.Migrations
                         {
                             Id = 1,
                             Email = "artist@example.com",
-                            PasswordHash = "$2a$12$QDzDQ1xAv.VtoDAMOwh03etdw84vhg2hySEntdPRlPGyv0m1l.SpG",
+                            PasswordHash = "password",
                             Role = "Artist",
                             Username = "artist"
                         });
@@ -203,22 +201,9 @@ namespace ArtistManager.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ArtistManager.Models.RefreshToken", b =>
-                {
-                    b.HasOne("ArtistManager.Models.User", "User")
-                        .WithMany("RefreshTokens")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("ArtistManager.Models.User", b =>
                 {
                     b.Navigation("Artworks");
-
-                    b.Navigation("RefreshTokens");
                 });
 #pragma warning restore 612, 618
         }
