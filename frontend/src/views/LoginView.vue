@@ -1,36 +1,38 @@
 <script setup>
 import ActionButton from '@/components/ActionButton.vue';
-import router from '@/router';
-import api from '@/services/api';
 import { ref } from 'vue';
-import { toast } from 'vue3-toastify';
+import { useAuthStore } from '@/stores/auth';
+
+const authStore = useAuthStore()
 
 const email = ref('')
 const password = ref('')
 
-async function login() {
-  const formData = new FormData()
 
-  formData.append('email', email.value)
-  formData.append('password', password.value)
 
-  try {
-    api.post('/Auth/login', formData, {
-      headers : {
-        'Content-Type' : 'multipart/form-data'
-      }
-    })
+// async function login() {
+//   const formData = new FormData()
 
-    router.push({
-      name: 'dashboard',
-      query: {toast : 'created'}
-    })
+//   formData.append('email', email.value)
+//   formData.append('password', password.value)
 
-  } catch (error) {
-    toast.error('Failed to register')
-    console.error(error);
-  }
-}
+//   try {
+//     api.post('/Auth/login', formData, {
+//       headers : {
+//         'Content-Type' : 'multipart/form-data'
+//       }
+//     })
+
+//     router.push({
+//       name: 'dashboard',
+//       query: {toast : 'created'}
+//     })
+
+//   } catch (error) {
+//     toast.error('Failed to register')
+//     console.error(error);
+//   }
+// }
 </script>
 
 <template>
@@ -41,7 +43,7 @@ async function login() {
 				<p class="mt-2 text-sm text-slate-600">Welcome back. Enter your details to continue.</p>
 			</div>
 
-			<form class="space-y-5" @submit.prevent="login">
+			<form class="space-y-5" @submit.prevent="authStore.login(email, password)">
 				<div>
 					<label class="mb-2 block text-sm font-medium text-slate-700" for="email">Email</label>
 					<input

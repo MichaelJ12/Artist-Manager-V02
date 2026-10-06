@@ -5,6 +5,7 @@ import ArtworksView from '@/views/ArtworksView.vue'
 import ArtworkEditView from '@/views/ArtworkEditView.vue'
 import ArtworksCreateView from '@/views/ArtworksCreateView.vue'
 import RegisterView from '@/views/RegisterView.vue'
+import { useAuthStore } from '@/stores/auth'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,6 +24,14 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: RegisterView,
+    },
+    {
+      path: '/logout',
+      name: 'logout',
+      beforeEnter: () => {
+        useAuthStore().logout()
+        return { name: 'login' }
+      },
     },
     {
       path: '/artworks',

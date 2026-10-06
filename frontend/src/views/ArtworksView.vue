@@ -7,16 +7,16 @@ import { Search } from 'lucide-vue-next'
 import { toast } from 'vue3-toastify'
 import { storeToRefs } from 'pinia';
 
-const store = useArtworkStore()
+const artworkStore = useArtworkStore()
 
 const route = useRoute()
 const router = useRouter()
 const search = ref('')
-const { artworkStore } = storeToRefs(store)
+const { artworks, error } = storeToRefs(artworkStore)
 const result = ref(false)
 
 const filteredArtworks = computed(() => {
-  return artworkStore.artworks.filter((artwork) => {
+  return artworks.value.filter((artwork) => {
     const query = search.value.trim().toLowerCase()
     if (!query) {
       return true
@@ -48,9 +48,7 @@ watch(
   { immediate: true }
 )
 
-onMounted(() => {
-  artworkStore.fetchArtworks()
-})
+onMounted(() => artworkStore.fetchArtworks())
 </script>
 
 <template>
@@ -82,6 +80,9 @@ onMounted(() => {
         <h1 class="text-2xl font-bold tracking-tight text-slate-900">Artworks</h1>
         <p class="mt-2 pl-2">{{ artworkStore.artworks.length }} Artworks</p>
       </div>
+      <p>{{ error }}
+
+      </p>
       <div v-if="result" class="flex justify-center pt-20">
         <p class="text-center">
           <Search class="h-24 w-24" />

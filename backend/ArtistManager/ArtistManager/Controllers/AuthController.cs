@@ -15,7 +15,7 @@ namespace ArtistManager.Controllers {
     public class AuthController(ArtistManagerDbContext context, JwtService jwtService) : ControllerBase {
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromForm] RegisterDto register) {
+        public async Task<IActionResult> Register(RegisterDto register) {
 
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -49,7 +49,7 @@ namespace ArtistManager.Controllers {
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromForm] LoginDto login) {
+        public async Task<IActionResult> Login(LoginDto login) {
             var user = await context.Users.FirstOrDefaultAsync(u => u.Email == login.Email);
 
             if (user == null || !BCrypt.Net.BCrypt.Verify(login.Password, user.PasswordHash)) {

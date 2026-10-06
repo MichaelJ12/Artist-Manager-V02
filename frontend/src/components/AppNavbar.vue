@@ -1,7 +1,10 @@
 <script setup>
 import { ref } from 'vue'
+import { useAuthStore } from '@/stores/auth';
 
 const isMenuOpen = ref(false)
+const authStore = useAuthStore()
+
 </script>
 
 <template>
@@ -31,6 +34,8 @@ const isMenuOpen = ref(false)
 			>
 				<div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-6">
 					<RouterLink
+              v-if="authStore.isLoggedIn"
+
 						class="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 hover:text-slate-900"
 						active-class="bg-indigo-50 text-indigo-700"
 						to="/artworks"
@@ -38,7 +43,18 @@ const isMenuOpen = ref(false)
 					>
 						Artworks
 					</RouterLink>
-          <RouterLink
+
+					<RouterLink
+						v-if="authStore.isLoggedIn"
+						class="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 hover:text-slate-900"
+						to="/logout"
+						@click="isMenuOpen = false"
+					>
+						Log out
+					</RouterLink>
+
+					<RouterLink
+              v-if="!authStore.isLoggedIn"
 						class="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 hover:text-slate-900"
 						active-class="bg-indigo-50 text-indigo-700"
 						to="/register"
@@ -47,6 +63,7 @@ const isMenuOpen = ref(false)
 						Register
 					</RouterLink>
 					<RouterLink
+              v-if="!authStore.isLoggedIn"
 						class="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 hover:text-slate-900"
 						active-class="bg-indigo-50 text-indigo-700"
 						to="/login"
@@ -54,6 +71,7 @@ const isMenuOpen = ref(false)
 					>
 						Log in
 					</RouterLink>
+
 				</div>
 			</div>
 		</nav>

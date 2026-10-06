@@ -13,15 +13,11 @@ const email = ref('')
 const password = ref('')
 
 async function register() {
-  const formData = new FormData()
-
-  formData.append('username', username.value)
-  formData.append('email', email.value)
-  formData.append('password', password.value)
-
   try {
-    await api.post('/Auth/register', formData, {
-      headers : { 'Content-Type' : 'multipart/form-data' }
+    await api.post('/Auth/register', {
+      username: username,
+      email: email,
+      password: password
     })
 
     router.push({

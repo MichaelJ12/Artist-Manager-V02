@@ -22,8 +22,10 @@ export const useArtworkStore = defineStore('artworks', () => {
       artworks.value = response.data
     } catch (err) {
       error.value = err
-      if (err.status == 401) {
-        console.log("gadds")
+      if (err.response?.status === 401) {
+        error.value = 'Authentication required. Please log in and try again.'
+      } else {
+        error.value = err.message
       }
       console.error('Failed to fetch artworks:', err)
     } finally {
