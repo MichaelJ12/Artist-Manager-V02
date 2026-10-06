@@ -5,11 +5,14 @@ import { useArtworkStore } from '@/stores/artworkStore';
 import { RouterLink, useRoute, useRouter } from 'vue-router';
 import { Search } from 'lucide-vue-next'
 import { toast } from 'vue3-toastify'
+import { storeToRefs } from 'pinia';
+
+const store = useArtworkStore()
 
 const route = useRoute()
 const router = useRouter()
 const search = ref('')
-const artworkStore = useArtworkStore()
+const { artworkStore } = storeToRefs(store)
 const result = ref(false)
 
 const filteredArtworks = computed(() => {

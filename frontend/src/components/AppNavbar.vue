@@ -38,6 +38,14 @@ const isMenuOpen = ref(false)
 					>
 						Artworks
 					</RouterLink>
+          <RouterLink
+						class="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 hover:text-slate-900"
+						active-class="bg-indigo-50 text-indigo-700"
+						to="/register"
+						@click="isMenuOpen = false"
+					>
+						Register
+					</RouterLink>
 					<RouterLink
 						class="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 hover:text-slate-900"
 						active-class="bg-indigo-50 text-indigo-700"

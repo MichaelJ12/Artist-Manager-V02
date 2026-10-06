@@ -5,7 +5,7 @@ import api from '@/services/api';
 import ActionButton from '@/components/ActionButton.vue';
 import { useNavigation } from '@/composables/useNavigation';
 
-const { goBackOrTo, router } = useNavigation()
+const { router } = useNavigation()
 
 const title =  ref('')
 const image = ref(null)

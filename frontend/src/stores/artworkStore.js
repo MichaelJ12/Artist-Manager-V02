@@ -22,6 +22,9 @@ export const useArtworkStore = defineStore('artworks', () => {
       artworks.value = response.data
     } catch (err) {
       error.value = err
+      if (err.status == 401) {
+        console.log("gadds")
+      }
       console.error('Failed to fetch artworks:', err)
     } finally {
       loading.value = false
