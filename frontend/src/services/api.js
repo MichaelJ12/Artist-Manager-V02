@@ -1,9 +1,12 @@
 import axios from 'axios'
 import { useAuthStore } from '@/stores/auth'
 
+const apiEndpoint = import.meta.env.VITE_API_ENDPOINT
+  
 const api = axios.create({
-  baseURL: 'https://localhost:7221/api'
+  baseURL: `${apiEndpoint}/api`
 })
+console.log(`${apiEndpoint}/api`);
 
 api.interceptors.request.use((config) => {
   const authStore = useAuthStore()

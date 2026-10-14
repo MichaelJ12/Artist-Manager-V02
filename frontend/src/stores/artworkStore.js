@@ -7,7 +7,7 @@ export const useArtworkStore = defineStore('artworks', () => {
   const loading = ref(false)
   const error = ref(null)
 
-  const apiBaseUrl = 'https://localhost:7221'
+  const apiBaseUrl = import.meta.env.VITE_API_ENDPOINT
 
   function resolveImageUrl(url) {
     return url.startsWith('https') ? url : apiBaseUrl + url
